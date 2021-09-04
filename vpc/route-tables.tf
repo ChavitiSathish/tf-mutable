@@ -6,6 +6,11 @@ resource "aws_route_table" "public" {
     cidr_block            = "0.0.0.0/0"
   }
 
+  route {
+    vpc_peering_connection_id  = aws_vpc_peering_connection.to-default-vpc.id
+    cidr_block                 = var.DEFAULT_VPC_CIDR
+  }
+
   tags                    = {
     Name                  = "${var.ENV}-public-rt"
   }
@@ -18,6 +23,11 @@ resource "aws_route_table" "private" {
   route {
     nat_gateway_id        = aws_nat_gateway.ngw.id
     cidr_block            = "0.0.0.0/0"
+  }
+
+  route {
+    vpc_peering_connection_id  = aws_vpc_peering_connection.to-default-vpc.id
+    cidr_block            = var.DEFAULT_VPC_CIDR
   }
 
   tags                    = {
