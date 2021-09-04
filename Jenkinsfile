@@ -12,6 +12,13 @@ pipeline {
         '''
       }
     }
+    stage('Something Apply') {
+          steps {
+            sh '''
+              echo something
+            '''
+          }
+        }
   }
 
   post {
