@@ -67,3 +67,12 @@ resource "null_resource" "mongodb-apply" {
 
   }
 }
+
+resource "aws_route53_record" "mongodb" {
+  zone_id                     = data.terraform_remote_state.vpc.outputs.INTERNAL_DNS_ZONE_ID
+  name                        = "mongodb-${var.ENV}.roboshop.internal"
+  type                        = "A"
+  ttl                         = "300"
+  records                     = [aws_spot_instance_request.mongodb.private_ip]
+
+}

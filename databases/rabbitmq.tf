@@ -67,3 +67,11 @@ resource "null_resource" "rabbitmq-apply" {
 
   }
 }
+
+resource "aws_route53_record" "rabbitmq" {
+  zone_id                     = data.terraform_remote_state.vpc.outputs.INTERNAL_DNS_ZONE_ID
+  name                        = "rabbitmq-${var.ENV}.roboshop.internal"
+  type                        = "A"
+  ttl                         = "300"
+  records                     = [aws_spot_instance_request.rabbitmq.private_ip]
+}
