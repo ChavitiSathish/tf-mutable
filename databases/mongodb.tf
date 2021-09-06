@@ -49,3 +49,21 @@ resource "aws_security_group" "allow_mongodb" {
     Environment                 = var.ENV
   }
 }
+
+resource "null_resource" "mongodb-apply" {
+  provisioner "remote-exec" {
+    connection {
+      host                      = aws_spot_instance_request.mongodb.private_ip
+      user                      = "centos"
+      password                  = "DevOps321"
+    }
+
+    inline = [
+      "sudo yum install python3-pip -y",
+      "sudo pip3 install pip --upgrade",
+      "sudo pip3 install ansible==4.1.0",
+      "ansible-pull -i localhost, -U https://github.com/ChavitiSathish/ansible.git roboshop-pull.yml -e COMPONENT=mongodb -e ENV=${var.ENV}"
+    ]
+
+  }
+}
