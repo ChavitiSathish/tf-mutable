@@ -1,2 +1,4 @@
 variable "ENV"                      {}
-variable "MONGODB_INSTANCE_TYPE"    {}
+variable "MONGO_INSTANCE_TYPE"      {}
+variable "RDS_MYSQL_INSTANCE_TYPE"  {}
+
