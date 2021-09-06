@@ -12,10 +12,11 @@ pipeline {
         '''
       }
     }
-    stage('Something Apply') {
+    stage('DB Apply') {
           steps {
             sh '''
-              echo something
+              cd databases
+              make ${ACTION}
             '''
           }
         }
