@@ -22,7 +22,6 @@ resource "aws_subnet" "public" {
   }
 }
 
-
 resource "aws_route_table_association" "public-rt" {
   count                   = length(var.PUBLIC_SUBNET_CIDRS)
   subnet_id               = element(aws_subnet.public.*.id, count.index)
@@ -34,5 +33,4 @@ resource "aws_route_table_association" "private-rt" {
   subnet_id               = element(aws_subnet.private.*.id, count.index)
   route_table_id          = aws_route_table.private.id
 }
-
 

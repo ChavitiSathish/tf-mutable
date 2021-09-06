@@ -33,4 +33,3 @@ output "PRIVATE_SUBNETS" {
 output "PUBLIC_SUBNETS" {
   value = aws_subnet.public.*.id
 }
-
