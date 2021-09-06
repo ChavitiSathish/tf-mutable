@@ -1,10 +1,10 @@
 pipeline {
   agent any
   parameters {
-    choice(name: 'ACTION', choices: ['dev-apply', 'prod-apply'], description: 'Choose Environment')
-  }
+     choice(name: 'ACTION', choices: ['dev-destroy', 'prod-destroy'], description: 'Choose Environment')
+      }
   stages {
-    stage('DB Apply') {
+    stage('DB Destroy') {
       steps {
         sh '''
           cd databases
@@ -12,7 +12,7 @@ pipeline {
         '''
       }
    }
-    stage('VPC Apply') {
+    stage('VPC Destroy') {
       steps {
         sh '''
           cd vpc
