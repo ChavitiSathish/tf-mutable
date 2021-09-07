@@ -4,14 +4,7 @@ pipeline {
     choice(name: 'ACTION', choices: ['dev-destroy', 'prod-destroy'], description: 'Choose Environment')
   }
   stages {
-    stage('ALB Destroy') {
-      steps {
-        sh '''
-          cd alb
-          make ${ACTION}
-        '''
-      }
-    }
+
 
     stage('DB Destroy') {
       steps {
