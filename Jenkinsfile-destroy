@@ -1,9 +1,18 @@
 pipeline {
   agent any
   parameters {
-     choice(name: 'ACTION', choices: ['dev-destroy', 'prod-destroy'], description: 'Choose Environment')
-      }
+    choice(name: 'ACTION', choices: ['dev-destroy', 'prod-destroy'], description: 'Choose Environment')
+  }
   stages {
+    stage('ALB Destroy') {
+      steps {
+        sh '''
+          cd alb
+          make ${ACTION}
+        '''
+      }
+    }
+
     stage('DB Destroy') {
       steps {
         sh '''
@@ -11,7 +20,8 @@ pipeline {
           make ${ACTION}
         '''
       }
-   }
+    }
+
     stage('VPC Destroy') {
       steps {
         sh '''
