@@ -20,14 +20,15 @@ pipeline {
             '''
           }
         }
-    stage('ALB Apply') {
-              steps {
-                sh '''
-                  cd alb
-                  make ${ACTION}
-                '''
-              }
-            }
+    stage('CART Apply') {
+      steps {
+        sh '''
+         git clone https://chavitisathish@dev.azure.com/chavitisathish/devops-project/_git/cart
+         cd cart/terraform-mutable
+         make ${ACTION}
+        '''
+      }
+    }
   }
 
   post {
