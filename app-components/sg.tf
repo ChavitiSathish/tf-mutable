@@ -31,3 +31,14 @@ resource "aws_security_group" "allow_component" {
     Environment                 = var.ENV
   }
 }
+
+
+resource "aws_security_group_rule" "only-for-frontend" {
+  count                         = var.COMPONENT == "frontend" ? 1 : 0
+  type                          = "ingress"
+  from_port                     = var.APP_PORT
+  to_port                       = var.APP_PORT
+  protocol                      = "tcp"
+  cidr_blocks                   = [data.terraform_remote_state.vpc.outputs.VPC_PUBLIC_CIDR]
+  security_group_id             = aws_security_group.allow_component.id
+}
