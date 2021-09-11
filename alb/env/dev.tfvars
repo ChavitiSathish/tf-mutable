@@ -1,2 +1,2 @@
 ENV                     = "dev"
-PUBLIC_LB_TYPE          = "internal"
+IS_PUBLIC_INTERNAL      = false
