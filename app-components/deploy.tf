@@ -11,7 +11,7 @@ resource "null_resource" "apply" {
       "sudo yum install python3-pip -y",
       "sudo pip3 install pip --upgrade",
       "sudo pip3 install ansible--4.1.0",
-      "ansible-pull -i localhost, -U https://DevOps-Batches@dev.azure.com/DevOps-Batches/DevOps57/_git/ansible roboshop-pull.yml -e COMPONENT=${var.COMPONENT} -e ENV=${var.ENV}"
+      "ansible-pull -i localhost, -U https://github.com/ChavitiSathish/ansible.git roboshop-pull.yml -e COMPONENT=${var.COMPONENT} -e ENV=${var.ENV}"
     ]
 
   }
@@ -20,6 +20,5 @@ resource "null_resource" "apply" {
 locals {
   DEPLOY_COUNT    = var.OD_INSTANCE_COUNT + var.SPOT_INSTANCE_COUNT
   DEPLOY_HOSTS    = concat(aws_instance.od-instance.*.private_ip, aws_spot_instance_request.instances.*.private_ip)
-  STRING = join(",", concat(aws_instance.od-instance.*.private_ip, aws_spot_instance_request.instances.*.private_ip))
 }
 
