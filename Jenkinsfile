@@ -20,6 +20,15 @@ pipeline {
             '''
           }
         }
+
+    stage('ALB Apply') {
+              steps {
+                sh '''
+                  cd alb
+                  make ${ACTION}
+                '''
+              }
+            }
     stage('CART Apply') {
       steps {
         sh '''
