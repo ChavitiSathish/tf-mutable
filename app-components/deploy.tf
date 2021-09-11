@@ -1,10 +1,4 @@
 resource "null_resource" "apply" {
-  triggers = {
-    APP_VERSION = var.APP_VERSION
-    STRING  = local.STRING
-    // To trigger this all the time then use the following way
-    //APP_VERSION = timestamp()
-  }
   count                         = local.DEPLOY_COUNT
   provisioner "remote-exec" {
     connection {
@@ -14,7 +8,10 @@ resource "null_resource" "apply" {
     }
 
     inline = [
-      "ansible-pull -i localhost, -U https://DevOps-Batches@dev.azure.com/DevOps-Batches/DevOps57/_git/ansible roboshop-pull.yml -e COMPONENT=${var.COMPONENT} -e ENV=${var.ENV} -e APP_PORT=80 -e APP_VERSION=${var.APP_VERSION}"
+      "sudo yum install python3-pip -y",
+      "sudo pip3 install pip --upgrade",
+      "sudo pip3 install ansible--4.1.0",
+      "ansible-pull -i localhost, -U https://DevOps-Batches@dev.azure.com/DevOps-Batches/DevOps57/_git/ansible roboshop-pull.yml -e COMPONENT=${var.COMPONENT} -e ENV=${var.ENV}"
     ]
 
   }
