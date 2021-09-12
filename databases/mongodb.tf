@@ -74,5 +74,4 @@ resource "aws_route53_record" "mongodb" {
   type                        = "A"
   ttl                         = "300"
   records                     = [aws_spot_instance_request.mongodb.private_ip]
-
 }

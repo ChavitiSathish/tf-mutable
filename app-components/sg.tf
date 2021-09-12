@@ -19,6 +19,14 @@ resource "aws_security_group" "allow_component" {
     cidr_blocks               = [data.terraform_remote_state.vpc.outputs.VPC_PRIVATE_CIDR]
   }
 
+  ingress                       {
+    description               = "PROMETHEUS"
+    from_port                 = 9100
+    to_port                   = 9100
+    protocol                  = "tcp"
+    cidr_blocks               = [data.terraform_remote_state.vpc.outputs.VPC_PRIVATE_CIDR, data.terraform_remote_state.vpc.outputs.DEFAULT_VPC_CIDR]
+  }
+
   egress                        {
     from_port                 = 0
     to_port                   = 0
@@ -31,7 +39,6 @@ resource "aws_security_group" "allow_component" {
     Environment                 = var.ENV
   }
 }
-
 
 resource "aws_security_group_rule" "only-for-frontend" {
   count                         = var.COMPONENT == "frontend" ? 1 : 0

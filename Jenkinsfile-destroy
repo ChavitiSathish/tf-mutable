@@ -4,79 +4,88 @@ pipeline {
     choice(name: 'ACTION', choices: ['dev-destroy', 'prod-destroy'], description: 'Choose Environment')
   }
   stages {
+
     stage('Components Destroy') {
-          parallel {
-            stage('CART Destroy') {
-              steps {
-                 dir('cart') {
-                     sh '''
-                       git clone https://chavitisathish@dev.azure.com/chavitisathish/devops-project/_git/cart .
-                       cd terraform-mutable
-                       make ${ACTION}
-                     '''
-                 }
-              }
+      parallel {
+        stage('Cart Destroy') {
+          steps {
+            dir('cart') {
+              sh '''
+                  git clone https://chavitisathish@dev.azure.com/chavitisathish/devops-project/_git/cart .
+                  cd terraform-mutable
+                  make ${ACTION}
+                '''
             }
+          }
+        }
+        stage('Catalogue Destroy') {
+          steps {
+            dir('catalogue') {
+              sh '''
 
-            stage('CATALOGUE Destroy') {
-              steps {
-                dir('catalogue') {
-                     sh '''
-                       git clone https://chavitisathish@dev.azure.com/chavitisathish/devops-project/_git/catalogue .
-                       cd terraform-mutable
-                       make ${ACTION}
-                     '''
-                }
-              }
+                git clone https://chavitisathish@dev.azure.com/chavitisathish/devops-project/_git/catalogue .
+                cd terraform-mutable
+                make ${ACTION}
+              '''
             }
-
-            stage('FRONTEND Destroy') {
-              steps {
-                dir('frontend') {
-                    sh '''
-                       git clone https://chavitisathish@dev.azure.com/chavitisathish/devops-project/_git/frontend .
-                       cd terraform-mutable
-                       make ${ACTION}
-                    '''
-                }
-              }
+          }
+        }
+        stage('User Destroy') {
+          steps {
+            dir('user') {
+              sh '''
+                git clone https://chavitisathish@dev.azure.com/chavitisathish/devops-project/_git/user .
+                cd terraform-mutable
+                make ${ACTION}
+              '''
             }
-
-            stage('USER Destroy') {
-              steps {
-                dir('user') {
-                    sh '''
-                       git clone https://chavitisathish@dev.azure.com/chavitisathish/devops-project/_git/user .
-                       cd terraform-mutable
-                       make ${ACTION}
-                    '''
-                }
-              }
+          }
+        }
+        stage('Payment Destroy') {
+          steps {
+            dir('payment') {
+              sh '''
+                git clone https://chavitisathish@dev.azure.com/chavitisathish/devops-project/_git/payment .
+                cd terraform-mutable
+                make ${ACTION}
+            '''
             }
-
-            stage('SHIPPING Destroy') {
-              steps {
-                dir('shipping') {
-                    sh '''
-                       git clone https://chavitisathish@dev.azure.com/chavitisathish/devops-project/_git/shipping .
-                       cd terraform-mutable
-                       make ${ACTION}
-                    '''
-                }
-              }
+          }
+        }
+        stage('Shipping Destroy') {
+          steps {
+            dir('shipping') {
+              sh '''
+                git clone https://chavitisathish@dev.azure.com/chavitisathish/devops-project/_git/shipping .
+                cd terraform-mutable
+                make ${ACTION}
+              '''
+            }
+          }
+        }
+        stage('Frontend Destroy') {
+          steps {
+            dir('frontend') {
+              sh '''
+                git clone https://chavitisathish@dev.azure.com/chavitisathish/devops-project/_git/frontend .
+                cd terraform-mutable
+                make ${ACTION}
+              '''
             }
           }
         }
 
+      }
+    }
 
     stage('ALB Destroy') {
-          steps {
-            sh '''
-              cd alb
-              make ${ACTION}
-            '''
-          }
-        }
+      steps {
+        sh '''
+          cd alb
+          make ${ACTION}
+        '''
+      }
+    }
 
     stage('DB Destroy') {
       steps {
@@ -105,4 +114,6 @@ pipeline {
   }
 
 }
+
+
 

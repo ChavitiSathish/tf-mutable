@@ -10,5 +10,3 @@ resource "aws_instance" "od-instance" {
     Monitor                         = "yes"
   }
 }
-
-
